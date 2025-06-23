@@ -1,35 +1,25 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Login_model extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->database();
-    }
+    public function cek_login($username, $password)
+    {
+        // Ambil user berdasarkan username
+        $this->db->where('username', $username);
+        $query = $this->db->get('scre_user');
 
-    public function login($username, $password) {
-        // Pastikan input tidak kosong
-        $username = trim(strtolower($username));
-        $password = trim($password);
+        // Jika user ditemukan
+        if ($query->num_rows() == 1) {
+            $user = $query->row();
 
-        if (empty($username) || empty($password)) {
-            log_message('error', 'Login gagal: Username atau password kosong.');
-            return false;
+            // Cek password (plain text)
+            // GANTI INI jika menggunakan password_hash!
+            if ($user->password == $password) {
+                return $user;
+            }
         }
 
-        $query = $this->db->get_where('scre_user', ['username' => $username]);
-        $user = $query->row();
-
-        if (!$user) {
-            log_message('error', 'Login gagal: User tidak ditemukan untuk username - ' . $username);
-            return false;
-        }
-
-        if (!password_verify($password, $user->password)) {
-            log_message('error', 'Login gagal: Password salah untuk username - ' . $username);
-            return false;
-        }
-
-        log_message('info', 'User berhasil login: ' . json_encode($user));
-        return $user;
+        return false; // Login gagal
     }
 }
