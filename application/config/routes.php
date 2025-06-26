@@ -51,15 +51,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$route['default_controller'] = 'login';
+// Default controller saat pertama kali diakses
+$route['default_controller'] = 'login'; // Tampilkan form login
+
+// Autentikasi
+$route['login']     = 'login/index';     // Form login
+$route['do-login']  = 'login/proses';    // Proses login
+$route['logout']    = 'login/logout';    // Logout dan redirect ke dashboard
+
+// Halaman utama/dashboard setelah login
+$route['dashboard'] = 'halaman_utama/index'; // Ini tujuan redirect saat logout
+
+// Modul data master
+$route['jenis-diklat'] = 'jenisdiklat/index';
+$route['diklat']       = 'diklat/index';
+
+// Error handling
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-$route['login']             = 'login';
-$route['login/proses']      = 'login/proses';
-$route['logout']            = 'login/logout';
-
-$route['register']          = 'register';
-$route['register/proses']   = 'register/proses';
-
-$route['jenis-diklat']      = 'JenisDiklat/index';
