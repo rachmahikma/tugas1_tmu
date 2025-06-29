@@ -53,4 +53,9 @@ class Diklat_model extends CI_Model
     {
         return $this->db->where('id', $id)->update($this->table, ['is_exist' => 0]);
     }
+    public function get_all()
+    {
+        return $this->db->get('scre_diklat')->result();
+    }
+
 }

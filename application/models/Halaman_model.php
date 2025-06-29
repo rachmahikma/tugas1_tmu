@@ -17,4 +17,8 @@ class Halaman_model extends CI_Model {
     {
         return $this->db->count_all('pendaftar');
     }
+public function get_total_persyaratan()
+    {
+        return $this->db->count_all('persyaratan');
+    }
 }

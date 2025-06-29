@@ -25,12 +25,21 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="<?= site_url('login/logout') ?>" class="nav-link login-link">Login</a>
+                    <?php if (!$this->session->userdata('user')): ?>
+                        <a href="<?= site_url('login') ?>" class="nav-link login-link">
+                            <i class="fa fa-sign-in-alt me-1"></i> Login
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= site_url('login/logout') ?>" class="nav-link login-link">
+                            <i class="fa fa-sign-out-alt me-1"></i> Logout
+                        </a>
+                    <?php endif; ?>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 <!-- Layout -->
 <div class="container-fluid">
@@ -38,7 +47,7 @@
         <!-- Sidebar -->
         <div class="col-md-2 bg-light vh-100 p-3">
             <div class="list-group">
-                <a href="<?= site_url('dashboard') ?>" class="list-group-item list-group-item-action active">
+                <a href="<?= site_url('Dashboard') ?>" class="list-group-item list-group-item-action active">
                     <i class="fa fa-home me-2"></i> Beranda
                 </a>
             </div>
