@@ -19,7 +19,7 @@ class JenisDiklat extends CI_Controller
     public function insert()
     {
         $data = [
-            'jenis_diklat' => $this->input->post('jenis_diklat_id'),
+            'jenis_diklat' => $this->input->post('jenis_diklat'),
             'sorting' => $this->input->post('sorting')
         ];
 
@@ -35,7 +35,7 @@ class JenisDiklat extends CI_Controller
         }
 
         $data = [
-            'jenis_diklat' => $this->input->post('jenis_diklat_id'),
+            'jenis_diklat' => $this->input->post('jenis_diklat'),
             'sorting' => $this->input->post('sorting')
         ];
 

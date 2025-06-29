@@ -75,7 +75,7 @@
       <div class="d-flex justify-content-between mb-3">
         <h4 class="fw-bold">Daftar Jenis Diklat</h4>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalJenisDiklat" id="btnTambah">
-          <i class="bi bi-plus-lg me-1"></i> Tambah Jenis Diklat
+          <i class="bi bi-plus-lg me-1"></i> Jenis Diklat
         </button>
       </div>
 
@@ -127,7 +127,7 @@
       <form method="post" id="formJenisDiklat" action="<?= site_url('JenisDiklat/insert') ?>">
         <div class="modal-header bg-primary text-white">
           <h5 class="modal-title fw-bold" id="modalJenisDiklatLabel">
-            <i class="bi bi-journal-plus me-2"></i> Tambah Jenis Diklat
+            <i class="bi bi-journal-plus me-2"></i> Jenis Diklat
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
@@ -143,7 +143,12 @@
 
           <div class="mb-3">
             <label class="form-label fw-semibold">Jenis Diklat</label>
-            <input type="text" class="form-control shadow-sm" name="jenis_diklat" id="jenis_diklat" required>
+            <select class="form-control shadow-sm" name="jenis_diklat" id="jenis_diklat" required>
+              <option value="">-- Pilih Jenis Diklat --</option>
+              <?php foreach ($jenis_diklat as $jd): ?>
+                <option value="<?= htmlspecialchars($jd->jenis_diklat) ?>"><?= htmlspecialchars($jd->jenis_diklat) ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
         </div>
 
@@ -166,6 +171,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('formJenisDiklat');
   const modalTitle = document.getElementById('modalJenisDiklatLabel');
+  const jenisSelect = document.getElementById('jenis_diklat');
 
   document.querySelectorAll('.btn-edit-jenis').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -173,7 +179,14 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('jenis_id').value = btn.dataset.id;
       document.getElementById('sorting').value = btn.dataset.sorting;
       document.getElementById('no_urut_display').value = btn.dataset.no;
-      document.getElementById('jenis_diklat').value = btn.dataset.jenis;
+
+      const jenisValue = btn.dataset.jenis;
+      const exists = [...jenisSelect.options].some(opt => opt.value === jenisValue);
+      if (!exists) {
+        const opt = new Option(jenisValue, jenisValue, true, true);
+        jenisSelect.appendChild(opt);
+      }
+      jenisSelect.value = jenisValue;
 
       modalTitle.innerHTML = '<i class="bi bi-pencil-square me-2"></i> Edit Jenis Diklat';
     });
