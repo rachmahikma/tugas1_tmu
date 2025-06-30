@@ -9,7 +9,11 @@
 <body class="bg-light">
 <div class="container py-4">
     <h4 class="mb-4 fw-bold">Persyaratan Diklat</h4>
-    <div class="alert alert-info"><strong>ID Diklat:</strong> <?= $diklat_id ?></div>
+
+    <!-- ✅ Ganti ID dengan Nama Diklat & Jenis Diklat -->
+    <div class="alert alert-info">
+        <strong>Diklat:</strong> <?= $diklat_nama ?> <span class="text-muted">(<?= $jenis_diklat ?>)</span>
+    </div>
 
     <div class="row">
         <!-- Template Persyaratan -->
@@ -51,34 +55,23 @@
     </div>
 </div>
 
-<!-- jQuery -->
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Search Filter Script -->
+<!-- Filter Search -->
 <script>
     $(document).ready(function () {
-        // Simpan item asli dalam bentuk array saat halaman pertama kali load
         const originalItems = $('#listTemplate .template-item').toArray();
 
         $('#searchTemplate').on('input', function () {
             const keyword = $(this).val().toLowerCase();
-
-            if (keyword === '') {
-                // Tampilkan kembali semua item dengan urutan awal
-                $('#listTemplate').empty().append(originalItems);
-            } else {
-                // Filter berdasarkan keyword dan tampilkan sesuai urutan asli
-                const filtered = originalItems.filter(item =>
-                    $(item).text().toLowerCase().includes(keyword)
-                );
-                $('#listTemplate').empty().append(filtered);
-            }
+            const filtered = originalItems.filter(item =>
+                $(item).text().toLowerCase().includes(keyword)
+            );
+            $('#listTemplate').empty().append(keyword === '' ? originalItems : filtered);
         });
     });
 </script>
-
-
-
 
 <!-- Tambah Persyaratan -->
 <script>
@@ -114,9 +107,7 @@
 <script>
     $(document).on('click', '.btn-hapus', function (e) {
         e.preventDefault();
-        if (!confirm('Yakin ingin menghapus persyaratan ini?')) {
-            return; // Batal jika pengguna pilih "Batal"
-        }
+        if (!confirm('Yakin ingin menghapus persyaratan ini?')) return;
 
         const persyaratanID = $(this).data('id');
         const diklatID = '<?= $diklat_id ?>';
@@ -134,14 +125,12 @@
 
                 if (data.status === 'deleted') {
                     container.remove();
-
                     $('#listTemplate').prepend(`
                         <div class="template-item d-flex justify-content-between align-items-center mb-2" id="item-${data.id}">
                             <span class="persyaratan-text">${data.persyaratan}</span>
                             <button class="btn btn-sm btn-primary btn-tambah" data-id="${data.id}">Tambahkan</button>
                         </div>
                     `);
-
                     if ($('#listDipilih .d-flex').length === 0) {
                         $('#listDipilih').html('<div class="text-muted fst-italic">Belum ada persyaratan yang dipilih.</div>');
                     }
@@ -150,3 +139,5 @@
         });
     });
 </script>
+</body>
+</html>

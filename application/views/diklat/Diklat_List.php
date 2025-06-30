@@ -5,12 +5,9 @@
   <meta charset="utf-8">
   <title>List Diklat</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
   <style>
     .login-link {
       color: #007bff;
@@ -43,84 +40,76 @@
 </head>
 
 <body>
-
-  <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand text-primary fw-bold" href="#">Portal Pendaftaran Diklat</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center gap-3">
-        <?php
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand text-primary fw-bold" href="#">Portal Pendaftaran Diklat</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center gap-3">
+          <?php
           $namaPengguna = $this->session->userdata('nama') ?? 'User';
           $inisial = strtoupper(substr($namaPengguna, 0, 1));
-        ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-2" style="width: 32px; height: 32px; font-size: 16px;">
-              <?= $inisial ?>
-            </div>
-            <span class="d-none d-sm-inline fw-semibold"><?= $namaPengguna ?></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2"></i> Profil Saya</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?= site_url('login/logout') ?>" id="logout-link"><i class="fa fa-sign-out-alt me-2"></i> Logout</a></li>
-          </ul>
-        </li>
-      </ul>
+          ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+              <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-2"
+                style="width: 32px; height: 32px;">
+                <?= $inisial ?>
+              </div>
+              <span class="d-none d-sm-inline fw-semibold"><?= $namaPengguna ?></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2"></i> Profil Saya</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="<?= site_url('login/logout') ?>"><i
+                    class="fa fa-sign-out-alt me-2"></i> Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-
-  <!-- Layout -->
   <div class="container-fluid">
     <div class="row">
-      <!-- Sidebar -->
       <div class="col-md-2 bg-light vh-100 p-3 sidebar">
         <div class="list-group">
           <a href="<?= site_url('dashboard') ?>" class="list-group-item list-group-item-action">
             <i class="fa fa-home me-2"></i> Beranda
           </a>
 
-           <!-- Dropdown Menu: Data Master -->
-        <div class="list-group-item px-0">
-          <a class="d-flex justify-content-between align-items-center text-decoration-none text-dark px-3 py-2"
-             data-bs-toggle="collapse" href="#submenuMaster" role="button" aria-expanded="false" aria-controls="submenuMaster" id="toggleMasterMenu">
-            <div><i class="fa fa-book me-2"></i> Data Master</div>
-            <i class="fa fa-chevron-down" id="masterMenuIcon"></i>
-          </a>
-
-          <div class="collapse" id="submenuMaster">
-            <div class="list-group list-group-flush">
-              <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('diklat') ?>">
-                <i class="fa fa-book-open me-2"></i> Diklat
-              </a>
-              <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('jenisdiklat') ?>">
-                <i class="fa fa-layer-group me-2"></i> Jenis Diklat
-              </a>
-              <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('Persyaratan') ?>">
-                <i class="fa fa-list-check me-2"></i> Persyaratan
-              </a>
+          <div class="list-group-item px-0">
+            <a class="d-flex justify-content-between align-items-center text-decoration-none text-dark px-3 py-2"
+              data-bs-toggle="collapse" href="#submenuMaster">
+              <div><i class="fa fa-book me-2"></i> Data Master</div>
+              <i class="fa fa-chevron-down"></i>
+            </a>
+            <div class="collapse" id="submenuMaster">
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('diklat') ?>">
+                  <i class="fa fa-book-open me-2"></i> Diklat
+                </a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('jenisdiklat') ?>">
+                  <i class="fa fa-layer-group me-2"></i> Jenis Diklat
+                </a>
+                <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('Persyaratan') ?>">
+                  <i class="fa fa-list-check me-2"></i> Persyaratan
+                </a>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
 
-
-      <!-- Main Content -->
       <div class="col-md-10 p-4">
         <?php if ($this->session->flashdata('success')): ?>
           <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= $this->session->flashdata('success') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
         <?php endif; ?>
 
@@ -173,7 +162,8 @@
                   </td>
                   <td>
                     <div class="d-flex flex-wrap gap-2">
-                      <a href="<?= site_url('Diklat/persyaratan/Persyaratan' . $d->id) ?>" class="btn btn-sm btn-warning">
+                      <!-- ✅ FIX: Link benar -->
+                      <a href="<?= site_url('Diklat/persyaratan/' . $d->id) ?>" class="btn btn-sm btn-warning">
                         <i class="bi bi-list-task"></i> Persyaratan
                       </a>
                       <a href="<?= site_url('Diklat/tahun/' . $d->id) ?>" class="btn btn-sm btn-secondary">
@@ -185,8 +175,7 @@
                     <div class="d-flex justify-content-center gap-2">
                       <button class="btn btn-sm btn-outline-primary btn-edit-diklat" data-id="<?= $d->id ?>"
                         data-nama="<?= $d->nama_diklat ?>" data-kode="<?= $d->kode_diklat ?>"
-                        data-jenis="<?= isset($d->jenis_diklat_id) ? $d->jenis_diklat_id : '' ?>"
-                        data-no="<?= isset($d->no_urut) ? $d->no_urut : '' ?>"
+                        data-jenis="<?= $d->jenis_diklat_id ?? '' ?>" data-no="<?= $d->no_urut ?? '' ?>"
                         data-bs-toggle="modal" data-bs-target="#modalDiklat">
                         <i class="bi bi-pencil-square"></i>
                       </button>
@@ -205,7 +194,7 @@
     </div>
   </div>
 
-  <!-- Modal Tambah/Edit Diklat -->
+  <!-- Modal Tambah/Edit -->
   <div class="modal fade" id="modalDiklat" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content shadow rounded-4">
@@ -215,7 +204,6 @@
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-
         <form method="post" id="formDiklat" action="<?= site_url('Diklat/insert') ?>">
           <div class="modal-body px-4 pt-3 pb-4 bg-light rounded-bottom-4">
             <input type="hidden" name="id" id="diklat_id">
@@ -240,14 +228,12 @@
                   placeholder="Contoh: DP-III N" required>
               </div>
             </div>
-
             <div class="mb-3">
               <label class="form-label fw-semibold">Nama Diklat</label>
               <input type="text" name="nama_diklat" id="nama_diklat" class="form-control shadow-sm"
                 placeholder="Masukkan nama diklat..." required>
             </div>
           </div>
-
           <div class="modal-footer border-top-0 d-flex justify-content-between px-4 pb-4">
             <button type="submit" class="btn btn-success rounded-pill px-4">
               <i class="bi bi-check2-circle me-1"></i> Simpan
@@ -261,7 +247,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {

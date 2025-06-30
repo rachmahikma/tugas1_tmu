@@ -57,5 +57,23 @@ class Diklat_model extends CI_Model
     {
         return $this->db->get('scre_diklat')->result();
     }
+    public function get_by_nama_jenis($nama_diklat, $jenis_diklat)
+    {
+        $this->db->select('d.*, j.jenis_diklat');
+        $this->db->from('scre_diklat d');
+        $this->db->join('scre_jenis_diklat j', 'd.jenis_diklat_id = j.id');
+        $this->db->where('d.nama_diklat', $nama_diklat);
+        $this->db->where('j.jenis_diklat', $jenis_diklat);
+        return $this->db->get()->row();
+    }
+    public function get_detail_by_id($id)
+    {
+        $this->db->select('d.*, j.jenis_diklat');
+        $this->db->from('scre_diklat d');
+        $this->db->join('scre_jenis_diklat j', 'j.id = d.jenis_diklat_id', 'left');
+        $this->db->where('d.id', $id);
+        return $this->db->get()->row();
+    }
+
 
 }

@@ -81,12 +81,27 @@ class Diklat extends CI_Controller
         redirect('Diklat');
     }
 
-    public function persyaratan($diklat_id)
+    public function persyaratan($id)
     {
-        $data['diklat_id'] = $diklat_id;
-        $data['template_persyaratan'] = $this->Persyaratan_model->get_template_belum_dipilih($diklat_id);
-        $data['persyaratan_dipilih'] = $this->Persyaratan_model->get_selected_by_diklat($diklat_id);
-        $this->load->view('diklat/persyaratan_view', $data);
+        $this->load->model('Diklat_model');
+        $this->load->model('Persyaratan_model');
+
+        $diklat = $this->Diklat_model->get_detail_by_id($id);
+
+        if (!$diklat) {
+            show_404();
+        }
+
+        $data['diklat_id'] = $id;
+        $data['diklat_nama'] = $diklat->nama_diklat;
+
+        // Ganti tanda hubung dengan spasi
+        $data['jenis_diklat'] = str_replace('-', ' ', $diklat->jenis_diklat);
+
+        $data['template_persyaratan'] = $this->Persyaratan_model->get_template_belum_dipilih($id);
+        $data['persyaratan_dipilih'] = $this->Persyaratan_model->get_selected_by_diklat($id);
+
+        $this->load->view('diklat/Persyaratan_view', $data);
     }
 
     public function tambah_persyaratan($diklat_id, $persyaratan_id)
