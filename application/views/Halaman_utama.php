@@ -40,7 +40,6 @@
         $namaPengguna = $this->session->userdata('nama') ?? 'User';
         $inisial = strtoupper(substr($namaPengguna, 0, 1));
         ?>
-        <!-- Avatar Profil dengan Inisial -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-2" style="width: 32px; height: 32px; font-size: 16px;">
@@ -68,15 +67,12 @@
         <a href="<?= site_url('dashboard') ?>" class="list-group-item list-group-item-action active">
           <i class="fa fa-home me-2"></i> Beranda
         </a>
-
-        <!-- Dropdown Menu: Data Master -->
         <div class="list-group-item px-0">
           <a class="d-flex justify-content-between align-items-center text-decoration-none text-dark px-3 py-2"
              data-bs-toggle="collapse" href="#submenuMaster" role="button" aria-expanded="false" aria-controls="submenuMaster" id="toggleMasterMenu">
             <div><i class="fa fa-book me-2"></i> Data Master</div>
             <i class="fa fa-chevron-down" id="masterMenuIcon"></i>
           </a>
-
           <div class="collapse" id="submenuMaster">
             <div class="list-group list-group-flush">
               <a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('diklat') ?>">
@@ -91,7 +87,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -106,13 +101,12 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- ✅ Konfirmasi Logout -->
+<!-- Konfirmasi Logout + Toggle Icon -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const logoutLink = document.getElementById("logout-link");
     logoutLink.addEventListener("click", function (e) {
-      const confirmLogout = confirm("Apakah Anda yakin ingin logout?");
-      if (!confirmLogout) {
+      if (!confirm("Apakah Anda yakin ingin logout?")) {
         e.preventDefault();
       }
     });

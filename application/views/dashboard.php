@@ -40,14 +40,13 @@
     </div>
 </nav>
 
-
 <!-- Layout -->
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-2 bg-light vh-100 p-3">
             <div class="list-group">
-                <a href="<?= site_url('Dashboard') ?>" class="list-group-item list-group-item-action active">
+                <a href="<?= site_url('dashboard') ?>" class="list-group-item list-group-item-action active">
                     <i class="fa fa-home me-2"></i> Beranda
                 </a>
             </div>
