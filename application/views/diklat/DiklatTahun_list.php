@@ -49,7 +49,9 @@
         <td><?= $no++ ?></td>
         <td><?= htmlspecialchars($row->tahun) ?></td>
         <td>
-          <a href="<?= site_url('Schedule/index/' . $row->tahun) ?>" class="btn btn-sm btn-info">Schedule</a>
+				<a href="<?= site_url('Schedule?tahun_id=' . $row->id . '&diklat_id=' . $row->diklat_id) ?>" class="btn btn-primary">
+    Schedule
+</a>
           <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $row->id ?>">Edit</button>
           <a href="<?= site_url('Diklat/hapus_tahun/' . $diklat_id . '/' . $row->id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
         </td>

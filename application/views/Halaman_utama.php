@@ -104,9 +104,6 @@
 							<a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('Persyaratan') ?>">
 								<i class="fa fa-list-check me-2"></i> Persyaratan
 							</a>
-							<a class="list-group-item list-group-item-action border-0 ps-5" href="<?= site_url('DiklatTahun') ?>">
-								<i class="fa fa-list-check me-2"></i> Diklat Tahun
-							</a>
 						</div>
 					</div>
 				</div>
