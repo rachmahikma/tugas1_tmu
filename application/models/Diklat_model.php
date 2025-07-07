@@ -55,7 +55,7 @@ class Diklat_model extends CI_Model
     }
     public function get_all()
     {
-        return $this->db->get('scre_diklat')->result();
+        return $this->db->get_where($this->table, ['is_exist' => 1])->result();
     }
     public function get_by_nama_jenis($nama_diklat, $jenis_diklat)
     {
@@ -75,5 +75,38 @@ class Diklat_model extends CI_Model
         return $this->db->get()->row();
     }
 
+// ✅ Ambil tahun diklat berdasarkan diklat_id
+    public function get_tahun_by_diklat($diklat_id)
+    {
+        return $this->db
+            ->where('diklat_id', $diklat_id)
+            ->where('is_exist', 1)
+            ->order_by('tahun', 'DESC')
+            ->get($this->tahun_table)
+            ->result();
+    }
 
+    // ✅ Ambil 1 tahun diklat berdasarkan ID tahun
+    public function get_tahun_by_id($tahun_id)
+    {
+        return $this->db->get_where($this->tahun_table, ['id' => $tahun_id])->row();
+    }
+
+    // ✅ Insert tahun diklat
+    public function insert_tahun($data)
+    {
+        return $this->db->insert($this->tahun_table, $data);
+    }
+
+    // ✅ Update tahun diklat
+    public function update_tahun($tahun_id, $data)
+    {
+        return $this->db->where('id', $tahun_id)->update($this->tahun_table, $data);
+    }
+
+    // ✅ Soft delete tahun diklat
+    public function delete_tahun($tahun_id)
+    {
+        return $this->db->where('id', $tahun_id)->update($this->tahun_table, ['is_exist' => 0]);
+    }
 }

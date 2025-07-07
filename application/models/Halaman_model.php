@@ -17,4 +17,8 @@ class Halaman_model extends CI_Model {
     {
         return $this->db->count_all('persyaratan');
     }
+	public function get_total_diklat_tahun()
+    {
+        return $this->db->count_all('scre_diklat_tahun');
+    }
 }
