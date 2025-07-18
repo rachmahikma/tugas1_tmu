@@ -24,6 +24,9 @@
 			</div>
 		<?php endif; ?>
 
+		<!-- Filter tahun di form, bukan JS, agar filter server-side dan pagination benar -->
+		
+
 		<!-- 📊 Jumlah Data -->
 		<div class="alert alert-secondary small">
 			<b>Jumlah Data Ditampilkan:</b> <?= isset($jadwal) ? count($jadwal) : 0 ?>
@@ -72,7 +75,7 @@
 
 		<!-- 🔁 Pagination & Navigasi -->
 		<div class="mt-3 d-flex justify-content-between align-items-center">
-			<div><?= $pagination ?></div>
+			<div><?= isset($pagination) ? $pagination : '' ?></div>
 			<?php
 			$back_id = !empty($diklat_id) ? $diklat_id : ($jadwal[0]->diklat_id ?? null);
 			if (!empty($back_id)):
@@ -83,6 +86,8 @@
 			<?php endif; ?>
 		</div>
 	</div>
+
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

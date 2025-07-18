@@ -65,6 +65,15 @@ $route['dashboard'] = 'halaman_utama/index'; // Ini tujuan redirect saat logout
 // Modul data master
 $route['jenis-diklat'] = 'jenisdiklat/index';
 $route['diklat']       = 'diklat/index';
+// Routing untuk Schedule
+$route['Schedule'] = 'Schedule/index'; // tampilan default (pakai GET untuk filter)
+
+// Routing untuk detail jadwal berdasarkan diklat
+$route['Schedule/(:any)'] = 'Schedule/show_by_diklat/$1';
+
+// Routing untuk detail berdasarkan tahun + diklat (2 segmen unik)
+$route['Schedule/(:any)/(:any)'] = 'Schedule/show_by_tahun_diklat/$1/$2';
+
 
 // Error handling
 $route['404_override'] = '';

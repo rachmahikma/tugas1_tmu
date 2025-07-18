@@ -49,7 +49,7 @@
         <td><?= $no++ ?></td>
         <td><?= htmlspecialchars($row->tahun) ?></td>
         <td>
-				<a href="<?= site_url('Schedule?tahun_id=' . $row->id . '&diklat_id=' . $row->diklat_id) ?>" class="btn btn-primary">
+				<a href="<?= site_url('Schedule/' . $row->id . '/'. $row->diklat_id) ?>" class="btn btn-primary">
     Schedule
 </a>
           <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $row->id ?>">Edit</button>
@@ -90,4 +90,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<?php

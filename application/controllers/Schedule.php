@@ -13,27 +13,29 @@ class Schedule extends CI_Controller
     public function index()
     {
         $limit = 20;
-        $tahun_id = $this->input->get('tahun_id');
-        $diklat_id = $this->input->get('diklat_id');
 
-        // Ambil segment offset dulu sebelum query
-        $segment = $this->uri->segment(3);
-        $start = (is_numeric($segment) && (int) $segment < 99999) ? (int) $segment : 0;
+        $tahun_kode = $this->input->get('tahun_id'); // ganti ke tahun_kode
+        $diklat_kode = $this->input->get('diklat_id'); // ganti ke diklat_kode
 
-        // Hitung total data berdasarkan filter
-        $total_rows = $this->schedule_model->count_by_diklat_tahun($diklat_id, $tahun_id);
+        $tahun_pelaksanaan = null;
+        if ($tahun_kode) {
+            $tahun_pelaksanaan = $this->schedule_model->get_tahun_pelaksanaan_from_tahun_kode($tahun_kode);
+        }
 
-        // Bangun base URL agar pagination tetap menjaga query string
-        $base_url = site_url('Schedule/index');
+        $segment = isset($_GET['per_page']) ? (int)$_GET['per_page'] : $this->uri->segment(3);
+        $start = (is_numeric($segment) && (int)$segment < 99999) ? (int)$segment : 0;
+
+        $total_rows = $this->schedule_model->count_by_diklat_tahun($diklat_kode, $tahun_kode, $tahun_pelaksanaan);
+
         $query_string = http_build_query(array_filter([
-            'tahun_id' => $tahun_id,
-            'diklat_id' => $diklat_id
+            'tahun_id' => $tahun_kode,
+            'diklat_id' => $diklat_kode
         ]));
+        $base_url = site_url('Schedule/tahun');
         if ($query_string) {
             $base_url .= '?' . $query_string;
         }
 
-        // Konfigurasi pagination
         $config = [
             'base_url' => $base_url,
             'total_rows' => $total_rows,
@@ -54,24 +56,59 @@ class Schedule extends CI_Controller
         ];
         $this->pagination->initialize($config);
 
-        // Ambil data jadwal sesuai filter dan pagination
-		
-        $jadwal = $this->schedule_model->get_by_diklat_tahun($diklat_id, $tahun_id, $limit, $start);
+        $jadwal = $this->schedule_model->get_by_diklat_tahun($diklat_kode, $tahun_kode, $tahun_pelaksanaan, $limit, $start);
 
-        // Info diklat jika tersedia
-        $data['diklat_nama'] = !empty($jadwal) ? ($jadwal[0]->nama_diklat ?? '-') : '-';
-        $data['jenis_diklat'] = !empty($jadwal) ? ($jadwal[0]->jenis_diklat ?? '-') : '-';
+        $data = [
+            'jadwal' => $jadwal,
+            'pagination' => $this->pagination->create_links(),
+            'diklat_nama' => !empty($jadwal) ? ($jadwal[0]->nama_diklat ?? '-') : '-',
+            'jenis_diklat' => !empty($jadwal) ? ($jadwal[0]->jenis_diklat ?? '-') : '-',
+            'list_tahun' => $this->schedule_model->get_all_tahun(),
+            'list_diklat' => $this->schedule_model->get_all_diklat(),
+            'tahun_id' => $tahun_kode,
+            'diklat_id' => $diklat_kode,
+            'start' => $start
+        ];
 
-        // Ambil list diklat dan tahun untuk filter dropdown
-        $data['list_tahun'] = $this->schedule_model->get_all_tahun();
-        $data['list_diklat'] = $this->schedule_model->get_all_diklat();
+        $this->load->view('schedule/Schedule_list', $data);
+    }
 
-        // Kirim semua ke view
-        $data['jadwal'] = $jadwal;
-        $data['pagination'] = $this->pagination->create_links();
-        $data['tahun_id'] = $tahun_id;
-        $data['diklat_id'] = $diklat_id;
-        $data['start'] = $start;
+    public function show_by_diklat($diklat_kode)
+    {
+        $limit = 200;
+        $start = 0;
+
+        $jadwal = $this->schedule_model->get_by_diklat($diklat_kode, $limit, $start);
+
+        $data = [
+            'jadwal' => $jadwal,
+            'pagination' => '',
+            'diklat_nama' => $this->schedule_model->get_diklat_name($diklat_kode),
+            'jenis_diklat' => $this->schedule_model->get_jenis_diklat($diklat_kode),
+            'diklat_id' => $diklat_kode,
+            'list_tahun' => $this->schedule_model->get_all_tahun(),
+            'start' => $start,
+            'tahun_id' => null
+        ];
+
+        $this->load->view('schedule/Schedule_list', $data);
+    }
+
+    public function show_by_tahun_diklat($tahun_kode = null, $diklat_kode = null)
+    {
+        $tahun_pelaksanaan = $this->schedule_model->get_tahun_pelaksanaan_from_tahun_kode($tahun_kode);
+        $jadwal = $this->schedule_model->get_by_diklat_tahun($diklat_kode, $tahun_kode, $tahun_pelaksanaan, 100, 0);
+
+        $data = [
+            'jadwal' => $jadwal,
+            'diklat_nama' => $this->schedule_model->get_diklat_name($diklat_kode),
+            'jenis_diklat' => $this->schedule_model->get_jenis_diklat($diklat_kode),
+            'diklat_id' => $diklat_kode,
+            'tahun_id' => $tahun_kode,
+            'list_tahun' => $this->schedule_model->get_all_tahun(),
+            'list_diklat' => $this->schedule_model->get_all_diklat(),
+            'start' => 0
+        ];
 
         $this->load->view('schedule/Schedule_list', $data);
     }
